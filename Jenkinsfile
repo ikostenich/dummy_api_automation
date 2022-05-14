@@ -25,7 +25,7 @@ pipeline {
                 stage('Run automated tests') {
                     steps {
                         sh '''
-                            docker run dummy_api_automation
+                            docker run --env-file .env dummy_api_automation
                         '''
                     }
                 }
