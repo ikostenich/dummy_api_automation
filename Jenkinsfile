@@ -2,9 +2,7 @@
 
 
 pipeline {
-        agent {
-            dockerfile true
-        }
+        agent { any }
 
         parameters {
             string(name: 'APP_ID', defaultValue: '627f60abb877aa976ca58d20', description: 'APP_ID api key used in requests headers')
@@ -16,15 +14,19 @@ pipeline {
         }
 
         stages {
-                stage('Pre-build actions') {
+                stage('Build Docker image') {
                     steps {
-                        sh """echo 'Starting Test Run'"""
+                        sh """
+                        docker build -t dummy_api_automation .
+                        """
                     }
                 }
 
                 stage('Run automated tests') {
                     steps {
-                        sh '/bin/bash -c pytest'
+                        sh '''
+                            docker run dummy_api_automation
+                        '''
                     }
                 }
             }

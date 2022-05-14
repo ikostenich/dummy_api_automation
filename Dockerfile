@@ -12,3 +12,5 @@ WORKDIR /automation
 RUN python3 setup.py install
 
 WORKDIR /automation/dummy_api
+
+CMD ["/bin/bash", "-c", "pytest"]
