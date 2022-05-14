@@ -24,9 +24,9 @@ pipeline {
 
                 stage('Run automated tests') {
                     steps {
-                        sh '''
-                            docker run --env-file .env dummy_api_automation
-                        '''
+                        sh "
+                            docker run -e APP_ID=${params.APP_ID} dummy_api_automation
+                        "
                     }
                 }
             }
