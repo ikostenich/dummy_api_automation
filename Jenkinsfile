@@ -2,7 +2,7 @@
 
 
 pipeline {
-        agent { any }
+        agent any
 
         parameters {
             string(name: 'APP_ID', defaultValue: '627f60abb877aa976ca58d20', description: 'APP_ID api key used in requests headers')
