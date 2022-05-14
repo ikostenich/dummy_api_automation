@@ -4,7 +4,6 @@ import random
 
 from dummy_api.src.utilities.generic_utilities import generate_random_email, generate_random_string, generate_current_date
 from dummy_api.src.utilities.json_utility import extract_json
-from dummy_api.src.services.user_service import UserService
 
 
 @pytest.mark.usefixtures('user_service')
@@ -33,8 +32,6 @@ class TestUser:
         assert user.email == payload['email'], f'Create customer api returned wrong email. \
             Actual: {user.email},  Expected: {payload["email"]}'
 
-        logger.debug(f'User created: {user}')
-
 
     @pytest.mark.tcid2
     def test_create_user_full(self, user_service):
@@ -61,8 +58,6 @@ class TestUser:
         assert user.email == payload['email'], f'Create customer api returned wrong email. \
             Actual: {user.email},  Expected: {payload["email"]}'
 
-        logger.debug(f'User created: {user}')
-
 
     @pytest.mark.tcid3
     def test_verify_invalid_email_error_message(self, user_service):
@@ -73,15 +68,16 @@ class TestUser:
             "email": generate_random_string(),
             }
         
-        expected_error_type = 'BODY_NOT_VALID'
+        EXPECTED_ERROR_TYPE = 'BODY_NOT_VALID'
         expected_error_message = f'Path `email` is invalid ({payload["email"]}).'
 
         error_message = user_service.create_user(expected_status_code=400, **payload)
+        
         actual_error_type = extract_json(error_message, '$.error')
         actual_error_message = extract_json(error_message, '$.data.email')
 
 
-        assert expected_error_type == actual_error_type, f'Error type is invalid \
-            Actual: {actual_error_type},  Expected: {expected_error_type}'
+        assert EXPECTED_ERROR_TYPE == actual_error_type, f'Error type is invalid \
+            Actual: {actual_error_type},  Expected: {EXPECTED_ERROR_TYPE}'
         assert expected_error_message == actual_error_message, f'Error message type is invalid \
             Actual: {actual_error_message},  Expected: {expected_error_message}'

@@ -1,11 +1,16 @@
+import logging as logger
+
 from dummy_api.src.utilities.generic_utilities import generate_random_email, generate_random_string
 from dummy_api.src.utilities.requests_utility import RequestsUtility
 from dummy_api.src.objects.user import User
 
+
 class UserService(object):
+
 
     def __init__(self):
         self.requests_utility = RequestsUtility()
+
 
     def create_user(self, expected_status_code=200, **kwargs):
         
@@ -18,9 +23,23 @@ class UserService(object):
         payload.update(kwargs)
 
         create_user_json = self.requests_utility.post('user/create', payload=payload, expected_status_code=expected_status_code)
+        
         try:
             user = User(**create_user_json)
+            logger.debug(f'User created: {user}')
             return user
         except TypeError:
             return create_user_json
+    
+
+    def get_user(self, user_id, expected_status_code=200):
+
+        user_json = self.requests_utility.get(f'user/{user_id}', expected_status_code=expected_status_code)
+        
+        try:
+            user = User(**user_json)
+            logger.debug(f'User received: {user}')
+            return user
+        except TypeError:
+            return user_json
     
