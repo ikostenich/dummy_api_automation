@@ -6,6 +6,7 @@ RUN mkdir /automation
 
 COPY ./dummy_api /automation/dummy_api
 COPY ./setup.py /automation
+COPY ./.env /automation/dummy_api
 
 WORKDIR /automation
 
