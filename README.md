@@ -115,3 +115,6 @@ cd dummy_api
 ```linux
 python3 -m pytest
 ```
+
+![image](https://user-images.githubusercontent.com/18323106/168470203-19541abe-4531-47e9-984f-b4a8c499db06.png)
+
